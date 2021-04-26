@@ -1,0 +1,60 @@
+#+TITLE: Minimalistic Dotfile Management
+#+DATE: 2020-09-15
+#+TAGS: software
+#+LANGUAGE: en
+#+AUTHOR: Chris Dempewolf
+#+DESCRIPTION: Using plain Git is my preferred method to backup my dotfiles
+
+* Minimalistic Dotfile Management
+
+Keeping your dotfiles in source control makes them consistent across time (e.g., revert to a previous version) and space (e.g., deploy to a new environment) and makes them shareable with the world. This isn't new. But what incantation of symlinks, submodules, and scripts is best?
+
+I prefer to use vanilla Git.
+
+** Setup
+
+Start by initializing a Git repository in your home directory. Then exclude everything.
+
+#+begin_src sh
+  git init && echo '*' > .gitignore
+#+end_src
+
+Whitelisting has a lot of benefits. Most importantly, ~git clean~ won't wipe all untracked files.
+
+Selectively add files to Git:
+
+#+begin_src sh
+  git add -f .vimrc
+#+end_src
+
+You must pass the ~-f~ option to ~git add~ since all files necessarily match your exclude pattern.
+
+If you use plugins for things like Vim or Zsh, you can add them as Git submodules: 
+
+#+begin_src sh
+  git submodule add -f git@github.com:tpope/vim-commentary.git .vim/bundle/
+#+end_src
+
+Here's how to replicate this on a new workstation:
+
+#+begin_src 
+  cd ~
+  git init .
+  git remote add origin your-dotfiles-repo-url
+  git pull origin master
+#+end_src
+
+And that's it. No symlinks, no install scripts, just plain ole Git.
+
+Here's what [[https://github.com/dempe/dotfiles][my dotfiles repository]] looks like.
+
+** Alternative Methods
+
+[[https://medium.com/@webprolific/getting-started-with-dotfiles-43c3602fd789][Many]] [[https://www.anishathalye.com/2014/08/03/managing-your-dotfiles/][methods]] [[https://medium.com/@driesvints/getting-started-with-dotfiles-76bf046d035c][for]] [[https://zachholman.com/2010/08/dotfiles-are-meant-to-be-forked/][tracking]] [[https://github.com/ryanb/dotfiles][dotfiles]] revolve around a dedicated dotfile directory with symlinks to the home directory. (Or symlinks to anywhere, really. This method does have the benefit of allowing you to add config files outside ~~~.)
+This is unnecessarily cumbersome. It requires you to have some sort of an install script or, worse yet, [[https://www.gnu.org/software/stow/][a]] [[https://github.com/deadc0de6/dotdrop][program]] [[https://github.com/jbernard/dotfiles][for]] [[https://github.com/andsens/homeshick][managing]] [[https://github.com/RichiH/vcsh][your]] [[https://github.com/TheLocehiliosan/yadm][symlinks]]. In addition to this, you still need Git. So why not just go with vanilla Git?
+
+** Troubleshooting
+
++ If you want to remove a file from Git, use ~git rm --cached <file>~. If you do not pass the ~--cached~ option, the file will be removed from disk (you'll still be able to retrieve the lost data from ~git reflog~).
++ Be wary of adding lots of files at once. In general with Git, I like to keep my commits as discrete as possible. This allows me to more easily undo or apply changes.
++ Be wary of unstaging added files. Use ~git rm --cached~ or a soft reset, ~git reset~. If you do a hard reset (~git reset --hard HEAD~), the files will not merely be unstaged - they will also be deleted. If this happens, not even ~git reflog~ can help you (since the files were never a part of any commit). You will have to look through the blobs in ~.git/lost-found/other~ to retrieve the deleted files.

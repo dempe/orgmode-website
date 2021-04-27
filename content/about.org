@@ -1,0 +1,23 @@
+#+TITLE: About
+#+LANGUAGE: en
+#+AUTHOR: Chris Dempewolf
+#+DESCRIPTION: Spiel about my website on software engineering
+
+<div class="epigraph">
+  <blockquote>
+    <p>In the beginner's mind there are many possibilities; in the expert's mind there are few.</p>
+    <footer>Shunryu Suzuki, <cite>Zen Mind, Beginner's Mind</cite></footer>
+  </blockquote>
+</div>
+
+** Personal
+
+#+CAPTION: Me eating a durian for the first time in Bangkok.
+[[./img/eating_durian.jpg]]
+
+
+I'm Chris Dempewolf, software engineer, aspiring [[https://en.wikipedia.org/wiki/English_as_a_second_or_foreign_language][EFL]] teacher. I made this blog to explore my thoughts. I don't really know what I know until I write it, so this is meant to serve as my light in the dark. 
+
+This blog's title, <span lang="ja">{{ site.title | escape }}</span> (pronounced sho-sheen), is a Zen concept roughly translated as "beginner's mind."  It implies curiosity, openness, and approaching things without preconceptions.  It is the goal of this blog to explore many new and interesting topics - always through the eyes of a beginner.
+
+Thanks for visiting.  If you like what you see, subscribe to my [[/feed.xml][RSS feed]]. You can reach me at <a href="mailto:chris@chrisdempewolf.com">chris@chrisdempewolf.com</a>.

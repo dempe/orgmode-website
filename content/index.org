@@ -1,0 +1,13 @@
+<div class="home">
+  <ul class="post-list">
+    {% for page in site.posts %}
+      <li>
+        <h2>
+          <a class="post-link" href="{{ page.url | prepend: site.baseurl }}">{{ page.title | escape }}</a>
+        </h2>
+        <p>{{ page.excerpt | markdownify }}</p>
+        {% include post_meta.html %}
+      </li>
+    {% endfor %}
+  </ul>
+</div>

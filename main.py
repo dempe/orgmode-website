@@ -1,6 +1,6 @@
 import os
 import shutil
-import org2html.org2html as org2html
+import parser
 
 
 CONTENT_DIRECTORY = "content"
@@ -27,7 +27,7 @@ def copy_and_parse_content_dir():
         for filename in files:
             new_filename = os.path.join(new_root, filename.replace(ORG_EXTENSION, HTML_EXTENSION))
             with open(new_filename, 'w') as file:
-                file.write(org2html.export_to_html(os.path.join(root, filename)))
+                file.write(parser.export_to_html(os.path.join(root, filename)))
 
 
 def copy_static_dir():
